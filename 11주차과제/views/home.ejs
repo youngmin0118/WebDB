@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title><%=title%></title>
+</head>
+<body> 
+    <%- login %>
+    <h1><a href="/"><%=title%></a></h1>
+    <img src="/image/adrian.jpg" style="width:200px; height:100px; display:block; margin-top:10px;">
+    <a href="/author">저자관리</a>
+    <ol type="1">
+        <% var i = 0;
+        while(i < list.length) { %>
+            <li><a href="/page/<%=list[i].id%>"><%=list[i].title%></a></li>
+        <% i += 1 } %>
+    </ol>
+    <%- menu %>
+    <%- body %>
+</body>
+</html>

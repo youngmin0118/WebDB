@@ -1,0 +1,115 @@
+<div class="container">
+    <h2 class="mb-4 fw-bold text-dark">
+        <span class="text-primary"><%= tableName %></span> 자료 목록
+    </h2>
+    
+    <table class="table table-bordered border-primary table-hover align-middle" style="text-align: center;">
+        <thead class="table-primary">
+            <tr>
+                <% if (columns && columns.length > 0) { %>
+                    <% columns.forEach((col) => { %>
+                        <th>
+                            <%= col.COLUMN_COMMENT ? col.COLUMN_COMMENT : col.COLUMN_NAME %>
+                        </th>
+                    <% }) %>
+                <% } %>
+                <th colspan="3" style="width: 15%;">관리</th>
+            </tr>
+        </thead> 
+        <tbody>
+            <% if (rows && rows.length > 0) { %>
+                <% rows.forEach((row) => { %>
+                    <%
+                        // 🌟 교수님 지시사항 반영: 테이블별 맞춤 경로 설정
+                        let createLink = "#";
+                        let updateLink = "#";
+                        let deleteLink = "#";
+
+                        switch(tableName) {
+                            case 'code':
+                                createLink = '/code/create';
+                                updateLink = '/code/update/' + row.main_id + '/' + row.sub_id + '/' + row.start + '/' + row.end;
+                                deleteLink = '/code/delete/' + row.main_id + '/' + row.sub_id + '/' + row.start + '/' + row.end;
+                                break;
+                            case 'person':
+                                createLink = '/person/create';
+                                updateLink = '/person/update/' + row.loginid;
+                                deleteLink = '/person/delete/' + row.loginid;
+                                break;
+                            case 'product':
+                                createLink = '/product/create';
+                                updateLink = '/product/update/' + row.prod_id;
+                                deleteLink = '/product/delete/' + row.prod_id;
+                                break;
+                            case 'boardtype':
+                                createLink = '/board/type/create';
+                                updateLink = '/board/type/update/' + row.type_id;
+                                deleteLink = '/board/type/delete/' + row.type_id;
+                                break;
+                            case 'cart':
+                                // 🌟 교수님 요구사항: 생성은 #, 수정은 수량 변경, 삭제는 해당 내역 삭제
+                                createLink = '#'; 
+                                updateLink = '/purchase/cartupdate/' + row.cart_id;
+                                // 만약 일반 cartdelete_process를 사용한다면 파라미터로 cart_id를 넘겨줍니다.
+                                deleteLink = '/purchase/cartdelete_process?cart_id=' + row.cart_id + '&admin=Y'; 
+                                break;
+                            case 'purchase':
+                                createLink = '#'; 
+                                updateLink = '/purchase/purchaseupdate/' + row.purchase_id;
+                                deleteLink = '/purchase/delete_process?purchase_id=' + row.purchase_id + '&admin=Y'; 
+                                break;
+                            default:
+                                createLink = '/' + tableName + '/create';
+                                updateLink = '#';
+                                deleteLink = '#';
+                        }
+                    %>
+                    <tr>
+                        <% columns.forEach((col) => { %>
+                            <td>
+                                <%= row[col.COLUMN_NAME] %>
+                            </td>
+                        <% }) %>
+                        
+                        <td>
+                            <% if(createLink !== '#') { %>
+                                <a href="<%= createLink %>" class="text-decoration-none text-success" style="font-size: 0.95rem;">생성</a>
+                            <% } else { %>
+                                <span class="text-muted">-</span>
+                            <% } %>
+                        </td>
+                        <td>
+                            <% if(updateLink !== '#') { %>
+                                <a href="<%= updateLink %>" class="text-decoration-none text-primary" style="font-size: 0.95rem;">수정</a>
+                            <% } else { %>
+                                <span class="text-muted">-</span>
+                            <% } %>
+                        </td>
+                        <td>
+                            <% if(deleteLink !== '#') { %>
+                                <a href="<%= deleteLink %>" class="text-decoration-none text-danger" style="font-size: 0.95rem;" onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</a>
+                            <% } else { %>
+                                <span class="text-muted">-</span>
+                            <% } %>
+                        </td>
+                    </tr>
+                <% }) %>
+            <% } else { %>
+                <tr>
+                    <td colspan="<%= columns.length + 3 %>" class="py-4 text-secondary">
+                        테이블에 저장된 자료 데이터가 존재하지 않습니다.
+                    </td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+
+    <div class="mt-4 d-flex justify-content-between">
+        <a href="/table" class="btn btn-sm btn-outline-primary px-3" style="text-decoration: none;">
+            <i class="bx bx-arrow-back"></i> 테이블 목록으로 돌아가기
+        </a>
+        <a href="/" class="btn btn-sm btn-outline-secondary px-3" style="text-decoration: none;">
+            <i class="bx bx-home"></i> 메인화면으로 복귀
+        </a>
+    </div>
+</div>

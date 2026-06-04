@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo-details">
+            <a href="/"><i class='bx bxl-c-plus-plus'></i></a>
+            <span class="logo_name">GCShop</span>
+        </div>
+        <ul class="nav-links">
+            <li>
+                <a href="/"><i class='bx bx-grid-alt'></i><span class="link_name">Dashboard</span></a>
+            </li>
+            <li>
+                <div class="icon-link">
+                    <a href="/category"><i class='bx bx-collection'></i><span class="link_name">Category</span></a>
+                    <i class='bx bxs-chevron-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="/category">Category</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="icon-link">
+                    <a href="/board"><i class='bx bx-book-alt'></i><span class="link_name">Board</span></a>
+                    <i class='bx bxs-chevron-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="/board">Board</a></li>
+                </ul>
+            </li>
+
+            <% if (cls === 'admin') { %>
+            <li>
+                <div class="icon-link">
+                    <a href="#"><i class='bx bx-data'></i><span class="link_name">DB Admin</span></a>
+                    <i class='bx bxs-chevron-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">DB Admin</a></li>
+                    <li><a href="/code/view">code CRUD</a></li>
+                    <li><a href="/person/view">person CRUD</a></li>
+                    <li><a href="/product/view">product CRUD</a></li>
+                </ul>
+            </li>
+            <% } %>
+
+            <% if (cls === 'MNG') { %>
+            <li>
+                <a href="/analytic"><i class='bx bx-pie-chart-alt-2'></i><span class="link_name">Analytic</span></a>
+            </li>
+            <% } %>
+
+            <% if (cls === 'CST') { %>
+            <li>
+                <a href="/purchase"><i class='bx bx-list-ul'></i><span class="link_name">Purchase List</span></a>
+            </li>
+            <li>
+                <a href="/cart"><i class='bx bx-cart-alt'></i><span class="link_name">Cart</span></a>
+            </li>
+            <% } %>
+
+            <li>
+                <div class="icon-link">
+                    <a href="/setting"><i class='bx bx-cog'></i><span class="link_name">Setting</span></a>
+                    <i class='bx bxs-chevron-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="/setting">Setting</a></li>
+                    <% if (cls === 'NON') { %>
+                        <li><a href="/auth/register">회원가입</a></li>
+                        <li><a href="#">아이디/비번 찾기</a></li>
+                    <% } else { %>
+                        <li><a href="#">내 정보 수정</a></li>
+                    <% } %>
+                </ul>
+            </li>
+
+            <li>
+                <div class="profile-details">
+                    <div class="profile-content">
+                        <img src="/images/guest.png" alt="profile">
+                    </div>
+                    <div class="name-job">
+                        <div class="profile_name"><%= who %></div>
+                        <div class="job"><%= cls %></div>
+                    </div>
+                    <%- login %>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <section class="home-section">
+        <div class="home-content">
+            <i class='bx bx-menu'></i>
+            <span class="text">Drop Down Sidebar (202235318 장영민)</span>
+        </div>
+        <div class="home-content2" style="padding: 30px;">
+            <% if (body.includes('.ejs')) { %>
+                <%- include(body) %>
+            <% } else { %>
+                <%- body %>
+            <% } %>
+        </div>
+    </section>
+
+    <script>
+        let arrows = document.querySelectorAll(".arrow");
+        for (var i = 0; i < arrows.length; i++) {
+            arrows[i].addEventListener("click", (e) => {
+                let arrowParent = e.target.parentElement.parentElement;
+                arrowParent.classList.toggle("showMenu");
+            });
+        }
+        let sidebar = document.querySelector(".sidebar");
+        let sidebarBtn = document.querySelector(".bx-menu");
+        sidebarBtn.addEventListener("click", () => {
+            sidebar.classList.toggle("close");
+        });
+    </script>
+</body>
+</html>

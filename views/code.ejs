@@ -1,0 +1,61 @@
+<div class="container">
+    <h2 class="mb-4">코드 테이블 관리</h2>
+    
+    <table class="table table-bordered border-primary table-hover" style="text-align: center;">
+        <thead class="table-primary">
+            <tr>
+                <th>대분류</th>
+                <th>대분류명</th>
+                <th>소분류</th>
+                <th>소분류명</th>
+                <th>시작일</th>
+                <th>종료일</th>
+                <th colspan="2">관리</th>
+            </tr>
+        </thead> 
+        <tbody>
+            <% if (results && results.length > 0) { %>
+                <% results.forEach((code) => { %>
+                    <tr>
+                        <td><%= code.main_id %></td>
+                        <td><%= code.main_name %></td>
+                        <td><%= code.sub_id %></td>
+                        <td><%= code.sub_name %></td>
+                        <td><%= code.start %></td>
+                        <td><%= code.end %></td>
+                        <td>
+                            <a href="/code/update/<%= code.main_id %>/<%= code.sub_id %>/<%= code.start %>/<%= code.end %>" 
+                               class="btn btn-sm btn-outline-success" style="text-decoration: none;">수정</a>
+                        </td>
+                        <td>
+                            <a href="/code/delete/<%= code.main_id %>/<%= code.sub_id %>/<%= code.start %>/<%= code.end %>" 
+                               class="btn btn-sm btn-outline-danger" style="text-decoration: none;" 
+                               onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</a>
+                        </td>
+                    </tr>
+                <% }) %>
+            <% } %>
+        </tbody>
+    </table>
+
+    <% if (!results || results.length === 0) { %>
+        <div class="mt-2 mb-2" style="color: #333; font-size: 0.95rem;">
+            자료가 없으니 코드 추가 버튼으로 코드를 추가해 주십시오.
+        </div>
+    <% } %>
+
+    <div class="d-flex justify-content-between align-items-center mt-3">
+    
+    <div>
+        <a href="/code/create" class="btn btn-sm btn-outline-secondary" 
+           style="color: #333; border-color: #ccc; background-color: #f8f9fa; text-decoration: none;">코드추가</a>
+    </div>
+
+    <div>
+        <a href="/" class="btn btn-sm btn-outline-secondary px-3" style="text-decoration: none;">
+            <i class="bx bx-home"></i> 메인화면으로 복귀
+        </a>
+    </div>
+    
+</div>
+</div>

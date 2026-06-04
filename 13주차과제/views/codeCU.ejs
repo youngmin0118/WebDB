@@ -1,0 +1,78 @@
+<div class="container" style="max-width: 600px; margin-top: 30px;">
+    
+    <% if (typeof code !== 'undefined') { %>
+        <h2 class="mb-4">코드 수정</h2>
+        
+        <form action="/code/update_process" method="post">
+            <input type="hidden" name="main_id" value="<%= code.main_id %>">
+            <input type="hidden" name="sub_id" value="<%= code.sub_id %>">
+            <input type="hidden" name="old_start" value="<%= code.start %>">
+            
+            <div class="mb-3">
+                <label class="form-label" style="font-weight: bold;">대분류명</label>
+                <input type="text" name="main_name" class="form-control" value="<%= code.main_name %>" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" style="font-weight: bold;">소분류명</label>
+                <input type="text" name="sub_name" class="form-control" value="<%= code.sub_name %>" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" style="font-weight: bold;">시작일</label>
+                <input type="text" name="start" class="form-control" value="<%= code.start %>" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" style="font-weight: bold;">종료일</label>
+                <input type="text" name="end" class="form-control" value="<%= code.end %>" required>
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary">수정</button>
+                <a href="/code/view" class="btn btn-outline-secondary">코드 목록 돌아가기</a>
+            </div>
+        </form>
+
+    <% } else { %>
+        <h2 class="mb-4">코드 입력</h2>
+        
+        <form action="/code/create_process" method="post">
+            
+            <div class="mb-3">
+                <label class="form-label" style="font-weight: bold;">대분류</label>
+                <input type="text" name="main_id" class="form-control" placeholder="대분류 코드를 입력하세요" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" style="font-weight: bold;">대분류명</label>
+                <input type="text" name="main_name" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" style="font-weight: bold;">소분류</label>
+                <input type="text" name="sub_id" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" style="font-weight: bold;">소분류명</label>
+                <input type="text" name="sub_name" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" style="font-weight: bold;">시작일</label>
+                <input type="text" name="start" class="form-control" placeholder="YYYYMMDD" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" style="font-weight: bold;">종료일</label>
+                <input type="text" name="end" class="form-control" placeholder="YYYYMMDD" required>
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary">입력</button>
+                <a href="/code/view" class="btn btn-outline-secondary">코드 목록 돌아가기</a>
+            </div>
+        </form>
+    <% } %>
+</div>

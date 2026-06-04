@@ -1,0 +1,10 @@
+var mysql = require('mysql2');
+var db = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'root',
+    database: 'webdb2026'
+});
+
+db.connect();
+module.exports = db;

@@ -1,0 +1,56 @@
+<div class="container mt-4" style="max-width: 750px;">	
+    <h2 class="mb-4 fw-bold text-success">
+        <i class="bx bx-edit"></i> 구매 내역 정보 수정 (Admin)
+    </h2>
+    
+    <form action="/purchase/purchaseupdate_process" method="post" class="card p-4 shadow-sm bg-light">
+        
+        <input type="hidden" name="purchase_id" value="<%= purchase.purchase_id %>" />
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold" for="loginid"><i class="bx bx-user"></i> 구매 고객 선택</label> 
+                <select name="loginid" id="loginid" class="form-select" required>
+                    <% if (persons && persons.length > 0) { %>
+                        <% persons.forEach((person) => { %>
+                            <option value="<%= person.loginid %>" <%= (purchase.loginid === person.loginid) ? 'selected' : '' %>>
+                                <%= person.name %> (<%= person.loginid %>)
+                            </option>
+                        <% }) %>
+                    <% } else { %>
+                        <option value="">등록된 사용자가 없습니다.</option>
+                    <% } %>
+                </select>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold" for="prod_id"><i class="bx bx-package"></i> 구매 상품 선택</label> 
+                <select name="prod_id" id="prod_id" class="form-select" required>
+                    <% if (products && products.length > 0) { %>
+                        <% products.forEach((prod) => { %>
+                            <option value="<%= prod.prod_id %>" <%= (purchase.prod_id === prod.prod_id) ? 'selected' : '' %>>
+                                <%= prod.name %> (ID: <%= prod.prod_id %>)
+                            </option>
+                        <% }) %>
+                    <% } else { %>
+                        <option value="">등록된 상품이 없습니다.</option>
+                    <% } %>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold" for="date"><i class="bx bx-calendar"></i> 구매 일자</label> 
+                <input class="form-control text-muted" type="text" name="date" id="date" value="<%= purchase.date %>" readonly style="background-color: #e9ecef;" />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold" for="price"><i class="bx bx-won"></i> 단가 (원)</label> 
+                <input class="form-control" type="number" name="price" id="price" value="<%= purchase.price %>" required />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold" for="qty"><i class="bx bx-list-ol

@@ -1,0 +1,56 @@
+<div class="container" style="max-width: 700px; margin-top: 30px;">
+    
+    <h3 class="mb-4 fw-bold">
+        <%= mode === 'update' ? '게시글 수정' : (mode === 'reply' ? '답변 달기' : '게시글 작성') %>
+    </h3>
+    
+    <form action="/board/<%= mode === 'update' ? 'update_process' : (mode === 'reply' ? 'reply_process' : 'create_process') %>" method="post" class="card p-4 border-0" style="background-color: transparent;">
+        
+        <input type="hidden" name="type_id" value="<%= typeId %>">
+        
+        <% if (mode === 'update' || mode === 'reply') { %>
+            <input type="hidden" name="board_id" value="<%= results[0].board_id %>">
+        <% } %>
+
+        <div class="mb-3">
+            <label class="form-label text-secondary">제목</label>
+            <input type="text" name="title" class="form-control border-0 shadow-sm" 
+                   value="<%= (mode === 'update' || mode === 'reply') ? results[0].title : '' %>" 
+                   <%= mode === 'reply' ? 'readonly' : 'required' %>>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label text-secondary">작성자</label>
+            <input type="text" class="form-control bg-light border-0 shadow-sm" 
+                   value="<%= mode === 'update' ? results[0].author_name : who %>" readonly>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label text-secondary">내용</label>
+            <textarea name="content" class="form-control border-0 shadow-sm" rows="8" required><%= mode === 'update' ? results[0].content : '' %></textarea>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label text-secondary" style="font-weight: bold;">본인 확인 (로그인 비밀번호)</label>
+            
+            <input type="password" name="password" class="form-control border-0 shadow-sm" 
+                   style="width: 50%; border: 1px solid #ced4da !important;"
+                   placeholder="<%= (cls === 'MNG') ? 'MNG 관리자는 비밀번호가 필요 없습니다' : '현재 계정의 비밀번호를 입력하세요' %>"
+                   <%= (cls === 'MNG') ? '' : 'required' %>>
+            
+            <% if (cls === 'MNG') { %>
+                <div class="form-text text-primary mt-1">※ MNG 권한으로 로그인 중입니다. 비밀번호 확인을 생략합니다.</div>
+            <% } else { %>
+                <div class="form-text text-danger mt-1">※ 일반 사용자는 실제 로그인 비밀번호와 일치해야 작성이 완료됩니다.</div>
+            <% } %>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-outline-primary px-4 shadow-sm">
+                <%= mode === 'update' ? '수정 완료' : (mode === 'reply' ? '답변 올리기' : '글 올리기') %>
+            </button>
+            
+            <a href="/board/view/<%= typeId %>/1" class="btn btn-outline-secondary px-4 shadow-sm">취소</a>
+        </div>
+    </form>
+</div>

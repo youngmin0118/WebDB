@@ -1,0 +1,80 @@
+<div class="container" style="margin-top: 30px;">
+    <h2 class="mb-4">상품 관리</h2>
+    
+    <table class="table table-bordered border-primary table-hover" style="text-align: center; vertical-align: middle;">
+        <thead class="table-primary">
+            <tr>
+                <th>이미지</th>
+                <th>상품명</th>
+                <th>가격</th>
+                <th>브랜드</th>
+                <% if (cls === 'MNG' || cls === 'CEO') { %>
+                    <th colspan="2">설정</th>
+                <% } %>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (typeof results !== 'undefined' && results && results.length > 0) { %>
+                <% for(var i = 0; i < results.length; i++) { %>
+                    <tr>
+                        <td>
+                            <% if (results[i].image) { %>
+                                <a href="/purchase/detail/<%= results[i].prod_id %>">
+                                    <img src="/images/<%= results[i].image %>" alt="<%= results[i].name %>" style="width: 70px; height: auto; cursor: pointer;">
+                                </a>
+                            <% } else { %>
+                                <a href="/purchase/detail/<%= results[i].prod_id %>" style="text-decoration: none;">
+                                    <span class="text-muted" style="cursor: pointer;">이미지 없음</span>
+                                </a>
+                            <% } %>
+                        </td>
+ 
+                        <td><%= results[i].name %></td>
+
+                        <td>
+                            <%= (results[i].price !== null && results[i].price !== undefined) ? results[i].price.toLocaleString() : 0 %>원
+                        </td>
+
+                        <td><%= results[i].brand %></td>
+                        
+                        <% if (cls === 'MNG' || cls === 'CEO') { %>
+                            <td>
+                                <a href="/product/update/<%= results[i].prod_id %>" class="btn btn-sm btn-outline-success">수정</a>
+                            </td>
+                            <td>
+                                <a href="/product/delete/<%= results[i].prod_id %>" 
+                                   class="btn btn-sm btn-outline-danger" 
+                                   onclick="return confirm('정말로 이 상품을 삭제하시겠습니까?')">삭제</a>
+                            </td>
+                        <% } %>
+                    </tr>
+                <% } %>
+            <% } else { %>
+                <tr>
+                    <td colspan="<%= (cls === 'MNG' || cls === 'CEO') ? 6 : 4 %>" class="py-4 text-secondary">
+                        등록된 상품이 없습니다.<br>
+                        상품 추가 버튼을 이용해 상품을 등록해 주세요.
+                    </td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between align-items-center mt-3">
+        
+        <div>
+            <% if (cls === 'MNG' || cls === 'CEO' || cls === 'admin') { %>
+                <a href="/product/create" class="btn btn-outline-secondary btn-sm">상품 추가</a>
+            <% } else { %>
+                &nbsp;
+            <% } %>
+        </div>
+
+        <div>
+            <a href="/" class="btn btn-sm btn-outline-secondary px-3">
+                <i class="bx bx-home"></i> 메인화면으로 복귀
+            </a>
+        </div>
+
+    </div>
+</div>

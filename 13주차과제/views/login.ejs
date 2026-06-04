@@ -1,0 +1,52 @@
+<div class="container">	
+    <h2>로그인</h2>
+    
+    <form action="/auth/login_process" method="post">
+        <div class="mb-3">
+            <label class="form-label" for="loginid">아이디</label> 
+            <input class="form-control" type="text" name="loginid" id="loginid" style="width:300px;" placeholder="아이디를 입력하세요" required />
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label" for="pwd">비밀번호</label> 
+            <input class="form-control" type="password" name="password" id="pwd" style="width:300px;" placeholder="비밀번호를 입력하세요" required />
+        </div>
+        
+        <button class="btn btn-outline-secondary btn-sm" type="submit">로그인</button>
+    </form>
+    <br>
+    <hr>
+    <h5> 아래 내용은 편의를 위해 적은 내용입니다 </h5>
+    <br>
+
+    <div class="mt-5">
+        <h5 class="text-secondary mb-3"><i class="bx bx-info-circle"></i> 연습용 계정 정보</h5>
+        <table class="table table-sm table-hover table-bordered text-center shadow-sm">
+            <thead class="table-light">
+                <tr>
+                    <th>권한</th>
+                    <th>아이디</th>
+                    <th>비밀번호</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="badge bg-danger">관리자</span></td>
+                    <td><code><b>admin</b></code></td>
+                    <td><code>1234</code></td>
+                </tr>
+                <tr>
+                    <td><span class="badge bg-success">경영진</span></td>
+                    <td><code><b>manager</b></code></td>
+                    <td><code>1234</code></td>
+                </tr>
+                <tr>
+                    <td><span class="badge bg-primary">일반고객</span></td>
+                    <td><code><b>user1</b></code></td>
+                    <td><code>1234</code></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
