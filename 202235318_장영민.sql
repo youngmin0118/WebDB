@@ -31,7 +31,7 @@ CREATE TABLE `appslist` (
   `installdate` datetime NOT NULL,
   `descript` varchar(200) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='앱 리스트 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -56,7 +56,7 @@ CREATE TABLE `author` (
   `name` varchar(20) NOT NULL,
   `profile` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='저자 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -88,7 +88,7 @@ CREATE TABLE `board` (
   PRIMARY KEY (`board_id`),
   KEY `type_id` (`type_id`),
   CONSTRAINT `board_ibfk_1` FOREIGN KEY (`type_id`) REFERENCES `boardtype` (`type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='게시판 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,7 +97,7 @@ CREATE TABLE `board` (
 
 LOCK TABLES `board` WRITE;
 /*!40000 ALTER TABLE `board` DISABLE KEYS */;
-INSERT INTO `board` VALUES (11,5,0,'user1','213','123','2026-05-14 15:00:50','213'),(19,2,0,'admin','1234','123','2026-05-14 15:31:17','213'),(20,2,0,'admin','1234','123','2026-05-14 15:31:30','123'),(24,1,0,'admin','1234','2','2026-05-14 15:33:18','2'),(25,5,0,'manager','1234','22','2026-05-19 19:57:50','22'),(26,2,0,'admin','1234','222','2026-05-19 19:58:38','2222222222222222222222');
+INSERT INTO `board` VALUES (37,1,37,'admin','1234','불만사항 11','2026-05-29 09:36:20','111'),(38,1,37,'admin','1234','[답변] : 불만사항 11','2026-05-29 09:36:25','111');
 /*!40000 ALTER TABLE `board` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -116,7 +116,7 @@ CREATE TABLE `boardtype` (
   `re_YN` varchar(1) NOT NULL,
   `numPerPage` int DEFAULT NULL,
   PRIMARY KEY (`type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='모든 게시판 종류 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -125,8 +125,34 @@ CREATE TABLE `boardtype` (
 
 LOCK TABLES `boardtype` WRITE;
 /*!40000 ALTER TABLE `boardtype` DISABLE KEYS */;
-INSERT INTO `boardtype` VALUES (1,'Q & A','질의 응답 전용 게시판','N','N',2),(2,'공지사항','쇼핑몰 관련 공지사항 개제','N','N',2),(3,'상품후기','고객들의 상품 후기 관련','N','N',2),(4,'고객 불만','고객 불만에 관한 글','Y','N',2),(5,'환불 및 취소 관련','환불 요청에 관한 게시글','Y','Y',2);
+INSERT INTO `boardtype` VALUES (1,'Q & A','질의 응답 전용 게시판','Y','Y',4),(2,'공지사항','쇼핑몰 관련 공지사항 개제','N','N',2),(3,'상품후기','고객들의 상품 후기 관련','Y','Y',2),(4,'고객 불만','고객 불만에 관한 글','Y','Y',2),(5,'환불 및 취소 관련','환불 요청에 관한 게시글','Y','Y',2);
 /*!40000 ALTER TABLE `boardtype` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cart`
+--
+
+DROP TABLE IF EXISTS `cart`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cart` (
+  `cart_id` int NOT NULL AUTO_INCREMENT COMMENT '카트 번호',
+  `loginid` varchar(50) NOT NULL COMMENT '로그인 아이디',
+  `prod_id` int NOT NULL COMMENT '상품 아이디',
+  `date` varchar(50) NOT NULL COMMENT '장바구니 담긴 날짜',
+  PRIMARY KEY (`cart_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=120 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='장바구니 테이블';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cart`
+--
+
+LOCK TABLES `cart` WRITE;
+/*!40000 ALTER TABLE `cart` DISABLE KEYS */;
+INSERT INTO `cart` VALUES (119,'admin',2,'2026.05.28: 11시 08분 29초');
+/*!40000 ALTER TABLE `cart` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -144,7 +170,7 @@ CREATE TABLE `code` (
   `start` varchar(8) NOT NULL,
   `end` varchar(8) NOT NULL,
   PRIMARY KEY (`main_id`,`sub_id`,`start`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='코드 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -174,7 +200,7 @@ CREATE TABLE `person` (
   `birth` varchar(8) NOT NULL,
   `class` varchar(3) NOT NULL,
   PRIMARY KEY (`loginid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='모든 회원 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -183,7 +209,7 @@ CREATE TABLE `person` (
 
 LOCK TABLES `person` WRITE;
 /*!40000 ALTER TABLE `person` DISABLE KEYS */;
-INSERT INTO `person` VALUES ('admin','1234','관리자','M','서울','010-1234-5678','19800506','MNG'),('manager','1234','과제용경영진','M','Gachon','010-1111-2222','19900101','CEO'),('user1','1234','고객1','F','Seongnam','010-3333-4444','20000514','CST'),('user2','1234','홍길동2',NULL,'2','010-1234-5678','20030118','CST');
+INSERT INTO `person` VALUES ('admin','1234','관리자','M','서울','010-1234-5678','19800506','MNG'),('manager','1234','과제용경영진','M','서울','010-1111-2222','19900101','CEO'),('user1','1234','고객1','F','인천','010-3333-4444','20000514','CST'),('user2','1234','홍길동2','M','대구','010-1234-5678','20030118','CST');
 /*!40000 ALTER TABLE `person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -205,7 +231,7 @@ CREATE TABLE `product` (
   `supplier` varchar(4) NOT NULL,
   `image` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`prod_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='모든 상품 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -216,6 +242,38 @@ LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
 INSERT INTO `product` VALUES (1,'옷','반팔티','하얀 반팔티',23000,22,'가천','영민','cloth_1.jpg'),(2,'옷','카라티','남색 카라티',30000,10,'가천','영민','cloth_2.jpg');
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `purchase`
+--
+
+DROP TABLE IF EXISTS `purchase`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `purchase` (
+  `purchase_id` int NOT NULL AUTO_INCREMENT,
+  `loginid` varchar(10) NOT NULL,
+  `prod_id` int DEFAULT NULL,
+  `date` varchar(30) NOT NULL,
+  `price` int DEFAULT NULL,
+  `point` int DEFAULT NULL,
+  `qty` int DEFAULT NULL,
+  `total` int DEFAULT NULL,
+  `payYN` varchar(1) NOT NULL DEFAULT 'N',
+  `cancel` varchar(1) NOT NULL DEFAULT 'N',
+  PRIMARY KEY (`purchase_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='구매 로그 테이블';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `purchase`
+--
+
+LOCK TABLES `purchase` WRITE;
+/*!40000 ALTER TABLE `purchase` DISABLE KEYS */;
+INSERT INTO `purchase` VALUES (83,'user1',1,'2026.05.21: 11시 17분 59초',23000,115,1,23000,'Y','Y'),(84,'user1',1,'2026.05.21: 17시 22분 12초',23000,115,1,23000,'Y','Y'),(85,'user1',1,'2026.05.21: 17시 22분 20초',23000,115,1,23000,'Y','Y'),(86,'user1',1,'2026.05.21: 19시 09분 13초',23000,115,1,23000,'Y','N'),(87,'user2',1,'2026.05.21: 19시 13분 39초',23000,115,1,23000,'Y','N'),(88,'user1',1,'2026.05.28: 10시 09분 38초',23000,115,1,23000,'Y','N'),(89,'user1',1,'2026.05.28: 10시 09분 43초',23000,115,1,23000,'Y','N'),(90,'user1',1,'2026.05.28: 10시 09분 51초',23000,115,1,23000,'Y','N'),(91,'user1',1,'2026.05.28: 10시 10분 00초',23000,2530,22,506000,'Y','N'),(92,'user1',1,'2026.05.28: 10시 26분 06초',23000,115,1,23000,'Y','N'),(93,'user1',1,'2026.05.28: 10시 27분 03초',23000,115,1,23000,'Y','Y'),(94,'user1',1,'2026.05.28: 10시 34분 14초',23000,115,1,23000,'Y','N'),(95,'user1',1,'2026.05.28: 10시 38분 10초',23000,115,1,23000,'Y','N'),(96,'admin',2,'2026.05.28: 11시 08분 33초',30000,150,1,30000,'Y','N');
+/*!40000 ALTER TABLE `purchase` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -230,7 +288,7 @@ CREATE TABLE `sessions` (
   `expires` int unsigned NOT NULL,
   `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
   PRIMARY KEY (`session_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='세션 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -239,7 +297,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` VALUES ('aJTGpEvgXI859emiORGnDETtKBC8iVyI',1779276394,'{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"is_logined\":true,\"loginid\":\"admin\",\"name\":\"과제용관리자\",\"cls\":\"MNG\"}');
+INSERT INTO `sessions` VALUES ('61HO5Yh1mJFFNdXzP5eDiHBxKEe_IeJs',1780031720,'{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"}}'),('s6wEC-f2HFKvGZyxKMUzdZPCHwqGqQkb',1780101386,'{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"is_logined\":true,\"loginid\":\"admin\",\"name\":\"과제용관리자\",\"cls\":\"MNG\"}'),('uMWbMb5v4UcKqui3kiOy_2_tzMuJCJMw',1780623003,'{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"}}');
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -257,7 +315,7 @@ CREATE TABLE `topic` (
   `created` datetime NOT NULL,
   `author_id` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='토픽 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -279,4 +337,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-05-19 20:31:11
+-- Dump completed on 2026-06-04 10:35:53
